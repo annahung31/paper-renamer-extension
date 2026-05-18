@@ -14,12 +14,20 @@ function sanitizeFilename(name) {
 
 function isPaperPdfUrl(url) {
   if (!url) return false;
-  // Must end with .pdf (ignoring query string / fragment)
   const path = url.split('?')[0].split('#')[0];
-  if (!path.toLowerCase().endsWith('.pdf')) return false;
+  const lower = url.toLowerCase();
+
+  // Known academic domains that serve PDFs without a .pdf extension
+  const knownPdfPaths = [
+    /arxiv\.org\/(pdf|e-print)\//i,
+    /openreview\.net\/pdf/i,
+  ];
+  const isKnownPdf = knownPdfPaths.some(re => re.test(url));
+
+  if (!isKnownPdf && !path.toLowerCase().endsWith('.pdf')) return false;
+
   // Heuristic: skip clearly non-academic URLs
   const ignore = ['invoice', 'receipt', 'form', 'manual', 'catalog'];
-  const lower = url.toLowerCase();
   return !ignore.some(w => lower.includes(w));
 }
 
