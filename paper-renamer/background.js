@@ -21,6 +21,7 @@ function isPaperPdfUrl(url) {
   const knownPdfPaths = [
     /arxiv\.org\/(pdf|e-print)\//i,
     /openreview\.net\/pdf/i,
+    /dl\.acm\.org\/doi\/pdf\//i,
   ];
   const isKnownPdf = knownPdfPaths.some(re => re.test(url));
 
@@ -74,6 +75,11 @@ function derivePageUrl(pdfUrl) {
   // ICLR OpenReview
   if (pdfUrl.includes('openreview.net')) {
     candidates.push(pdfUrl.replace('/pdf?', '/forum?').replace(/\.pdf$/i, ''));
+  }
+
+  // ACM Digital Library — /doi/pdf/10.xxxx/... → /doi/10.xxxx/...
+  if (pdfUrl.includes('dl.acm.org/doi/pdf/')) {
+    candidates.push(pdfUrl.replace('/doi/pdf/', '/doi/'));
   }
 
   // ScienceDirect (Elsevier) — S3 asset URLs contain ?pii=XXXXXX
