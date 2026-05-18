@@ -25,7 +25,7 @@
     const rawTitle = document.title?.trim();
     if (rawTitle) {
       let t = rawTitle.replace(
-        /\s*[|–—-]\s*(ACL Anthology|arXiv|Semantic Scholar|OpenReview|PMLR|NeurIPS|ICLR|ICML|AAAI|ACM|IEEE|Springer|Elsevier).*$/i, ''
+        /\s*[|–—-]\s*(ACL Anthology|arXiv|Semantic Scholar|OpenReview|PMLR|NeurIPS|ICLR|ICML|AAAI|ACM|IEEE|Springer|Elsevier|ScienceDirect).*$/i, ''
       ).replace(/\s*\[.*?\]\s*$/, '').trim();
       if (t.length > 10) return t;
     }

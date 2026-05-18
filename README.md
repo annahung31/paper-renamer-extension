@@ -26,6 +26,7 @@ Download a paper from arXiv, ACL Anthology, or any supported source. Instead of 
 | ACM Digital Library | ACM DL papers |
 | IEEE Xplore | IEEE papers |
 | Springer | SpringerLink papers |
+| ScienceDirect | Elsevier journals (extracts PII from S3 asset URL) |
 
 ## How It Works
 
@@ -94,6 +95,7 @@ MIT
 | ACM Digital Library | ACM DL 論文 |
 | IEEE Xplore | IEEE 論文 |
 | Springer | SpringerLink 論文 |
+| ScienceDirect | Elsevier 期刊（從 S3 asset URL 中提取 PII） |
 
 ## 運作原理
 

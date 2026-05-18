@@ -68,6 +68,14 @@ function derivePageUrl(pdfUrl) {
     candidates.push(pdfUrl.replace('/pdf?', '/forum?').replace(/\.pdf$/i, ''));
   }
 
+  // ScienceDirect (Elsevier) — S3 asset URLs contain ?pii=XXXXXX
+  if (pdfUrl.includes('sciencedirectassets.com') || pdfUrl.includes('sciencedirect.com')) {
+    const piiMatch = pdfUrl.match(/[?&]pii=([A-Z0-9]+)/i);
+    if (piiMatch) {
+      candidates.push(`https://www.sciencedirect.com/science/article/pii/${piiMatch[1]}`);
+    }
+  }
+
   // Generic fallback: strip .pdf
   const generic = pdfUrl.replace(/\.pdf(\?.*)?$/i, '');
   if (generic !== pdfUrl) candidates.push(generic);
@@ -109,7 +117,7 @@ async function fetchTitleFromPage(pageUrl) {
     if (titleMatch) {
       let t = titleMatch[1].trim();
       // Remove common site suffixes: " | ACL Anthology", " - arXiv", etc.
-      t = t.replace(/\s*[|–—-]\s*(ACL Anthology|arXiv|Semantic Scholar|OpenReview|PMLR|NeurIPS|ICLR|ICML|AAAI|ACM|IEEE|Springer|Elsevier).*$/i, '');
+      t = t.replace(/\s*[|–—-]\s*(ACL Anthology|arXiv|Semantic Scholar|OpenReview|PMLR|NeurIPS|ICLR|ICML|AAAI|ACM|IEEE|Springer|Elsevier|ScienceDirect).*$/i, '');
       t = t.replace(/\s*\[.*?\]\s*$/, ''); // remove trailing [tag]
       if (t.length > 10) return t.trim();
     }
